@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>lirios</title>
+    <style>
+
+        body {
+            font-family: 'Crimson Text', serif;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #ffffff 0%, #f5ffb6 50%, #ffd1dc 100%);
+        }
+
+        .container {
+            text-align: center;
+            color: white;
+            max-width: 600px;
+            padding: 40px;
+        }
+
+        .mensaje-final {
+            font-size: 2.2rem;
+            line-height: 1.2;
+            margin-bottom: 40px;
+            font-weight: 100;
+            color: #bda614;
+            font-family: 'Playfair Display', serif;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            animation: fadeInMessage 1s ease-in forwards;
+        }
+
+        @keyframes fadeInMessage {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .reveal-btn {
+            margin-top: 20px;
+            padding: 12px 22px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 999px;
+            cursor: pointer;
+            background: #4ea721;
+            color: #ffffff;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .reveal-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .hidden-image {
+            display: none;
+            margin: 20px auto 0;
+            max-width: 4000px;
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .hidden-image.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <audio id="bgMusic" src="flor.mp3" preload="auto" loop></audio>
+    <div class="container">
+        <div class="mensaje-final">
+        quise poner lirios por que significan belleza , respeto y admiracion y me parece muy buen significado
+          <nav>de mi para ti</nav>
+          <nav>LIRIOS 🌼</nav>
+        </div>
+        
+        <button id="showImageBtn" class="reveal-btn" type="button">plantar semilla 🌱</button>
+        <img id="sorpresaImg" class="hidden-image" src="lirio.gif" alt="Imagen sorpresa">
+    </div>
+
+    <script>
+        const bgMusic = document.getElementById('bgMusic');
+        const showImageBtn = document.getElementById('showImageBtn');
+        const sorpresaImg = document.getElementById('sorpresaImg');
+
+        const startMusic = () => {
+            bgMusic.play().catch(() => {});
+            document.removeEventListener('click', startMusic);
+            document.removeEventListener('touchstart', startMusic);
+            document.removeEventListener('keydown', startMusic);
+        };
+
+        document.addEventListener('click', startMusic);
+        document.addEventListener('touchstart', startMusic);
+        document.addEventListener('keydown', startMusic);
+
+        showImageBtn.addEventListener('click', () => {
+            showImageBtn.style.display = 'none';
+            sorpresaImg.classList.add('show');
+        });
+    </script>
+</body>
+</html>

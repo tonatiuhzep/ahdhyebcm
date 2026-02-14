@@ -1,0 +1,347 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<title>Vuelo</title>
+
+<style>
+:root {
+    --white: #ffffff;
+    --takeoff-x: 62vw;
+    --takeoff-y: -48vh;
+    --land-x: 82vw;
+    --land-y: -8vh;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    font-family: "Space Grotesk", sans-serif;
+    color: var(--white);
+    background: rgb(7, 174, 221);
+}
+
+.scene {
+    position: relative;
+    width: 100%;
+    height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.clouds {
+    position: absolute;
+    top: 6vh;
+    left: 0;
+    width: 100%;
+    pointer-events: none;
+}
+
+.cloud {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 999px;
+}
+
+.cloud::before,
+.cloud::after {
+    content: "";
+    position: absolute;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 999px;
+}
+
+.cloud-1 {
+    width: 140px;
+    height: 42px;
+    top: 0;
+    left: 8%;
+}
+
+.cloud-1::before {
+    width: 54px;
+    height: 54px;
+    left: 16px;
+    top: -24px;
+}
+
+.cloud-1::after {
+    width: 68px;
+    height: 68px;
+    right: 12px;
+    top: -30px;
+}
+
+.cloud-2 {
+    width: 170px;
+    height: 48px;
+    top: 2vh;
+    left: 42%;
+}
+
+.cloud-2::before {
+    width: 62px;
+    height: 62px;
+    left: 20px;
+    top: -28px;
+}
+
+.cloud-2::after {
+    width: 76px;
+    height: 76px;
+    right: 18px;
+    top: -34px;
+}
+
+.cloud-3 {
+    width: 130px;
+    height: 38px;
+    top: -1vh;
+    right: 10%;
+}
+
+.cloud-3::before {
+    width: 50px;
+    height: 50px;
+    left: 14px;
+    top: -22px;
+}
+
+.cloud-3::after {
+    width: 58px;
+    height: 58px;
+    right: 14px;
+    top: -25px;
+}
+
+.cloud-4 {
+    width: 110px;
+    height: 34px;
+    top: 8vh;
+    left: 22%;
+}
+
+.cloud-4::before {
+    width: 42px;
+    height: 42px;
+    left: 10px;
+    top: -18px;
+}
+
+.cloud-4::after {
+    width: 50px;
+    height: 50px;
+    right: 10px;
+    top: -22px;
+}
+
+.cloud-5 {
+    width: 150px;
+    height: 44px;
+    top: 7vh;
+    left: 64%;
+}
+
+.cloud-5::before {
+    width: 58px;
+    height: 58px;
+    left: 14px;
+    top: -26px;
+}
+
+.cloud-5::after {
+    width: 66px;
+    height: 66px;
+    right: 14px;
+    top: -30px;
+}
+
+.cloud-6 {
+    width: 120px;
+    height: 36px;
+    top: 11vh;
+    right: 24%;
+}
+
+.cloud-6::before {
+    width: 44px;
+    height: 44px;
+    left: 12px;
+    top: -19px;
+}
+
+.cloud-6::after {
+    width: 54px;
+    height: 54px;
+    right: 12px;
+    top: -24px;
+}
+
+.btn {
+    padding: 16px 36px;
+    border: 2px solid var(--white);
+    color: var(--white);
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(6px);
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: 0.2s ease;
+}
+
+.btn:hover {
+    background: white;
+    color: rgb(0, 0, 0);
+}
+
+.btn-next {
+    position: absolute;
+    bottom: 8vh;
+}
+
+.is-hidden {
+    display: none;
+}
+
+/* AVIÓN */
+.plane-wrap {
+    position: absolute;
+    left: 8vw;
+    top: 78vh;
+    width: 200px;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.plane-wrap.visible {
+    opacity: 1;
+}
+
+.plane img {
+    width: 100%;
+}
+
+/* ANIMACIONES */
+.takeoff {
+    animation: takeoff 2.5s ease-in forwards;
+}
+
+.cruise-position {
+    transform: translate(var(--takeoff-x), var(--takeoff-y)) rotate(-6deg);
+}
+
+.bobbing {
+    animation: bob 1.8s ease-in-out infinite;
+}
+
+.landing {
+    animation: landing 2.5s ease-out forwards;
+}
+
+@keyframes takeoff {
+    from { transform: translate(0,0) rotate(0deg); }
+    to { transform: translate(var(--takeoff-x), var(--takeoff-y)) rotate(-10deg); }
+}
+
+@keyframes bob {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
+
+@keyframes landing {
+    from { transform: translate(var(--takeoff-x), var(--takeoff-y)) rotate(-6deg); }
+    to { transform: translate(var(--land-x), var(--land-y)) rotate(8deg); }
+}
+
+
+@media (max-width: 600px) {
+    .plane-wrap {
+        width: 150px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<main class="scene">
+
+    <div class="clouds">
+        <div class="cloud cloud-1"></div>
+        <div class="cloud cloud-2"></div>
+        <div class="cloud cloud-3"></div>
+        <div class="cloud cloud-4"></div>
+        <div class="cloud cloud-5"></div>
+        <div class="cloud cloud-6"></div>
+    </div>
+
+    <button id="startBtn" class="btn">iniciar viaje :D </button>
+    <audio id="flightMusic" src="avion.mp3" preload="auto"></audio>
+
+    <div id="planeWrap" class="plane-wrap">
+        <div id="plane" class="plane">
+            <img src="avion.png" alt="Avion" />
+        </div>
+    </div>
+
+    <button id="nextBtn" class="btn btn-next is-hidden">
+        hemos llegado a su destino 👨‍✈️
+    </button>
+
+</main>
+
+<script>
+const startBtn = document.getElementById("startBtn");
+const nextBtn = document.getElementById("nextBtn");
+const planeWrap = document.getElementById("planeWrap");
+const plane = document.getElementById("plane");
+const flightMusic = document.getElementById("flightMusic");
+
+const TAKEOFF_MS = 2500;
+const LANDING_MS = 2500;
+const TOTAL_FLIGHT_MS = 18000;
+const CRUISE_MS = Math.max(0, TOTAL_FLIGHT_MS - TAKEOFF_MS - LANDING_MS);
+
+function startLanding() {
+    plane.classList.remove("bobbing");
+    planeWrap.classList.remove("cruise-position");
+    planeWrap.classList.add("landing");
+}
+
+startBtn.addEventListener("click", () => {
+    startBtn.classList.add("is-hidden");
+    planeWrap.classList.add("visible", "takeoff");
+    flightMusic.currentTime = 0;
+    flightMusic.play().catch(() => {});
+});
+
+planeWrap.addEventListener("animationend", (event) => {
+    if (event.animationName === "takeoff") {
+        planeWrap.classList.remove("takeoff");
+        planeWrap.classList.add("cruise-position");
+        plane.classList.add("bobbing");
+        setTimeout(startLanding, CRUISE_MS);
+    }
+
+    if (event.animationName === "landing") {
+        nextBtn.classList.remove("is-hidden");
+        flightMusic.pause();
+        flightMusic.currentTime = 0;
+    }
+});
+
+nextBtn.addEventListener("click", () => {
+    window.location.href = "flor1.html";
+});
+</script>
+
+</body>
+</html>
